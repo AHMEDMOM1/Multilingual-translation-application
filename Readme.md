@@ -1,11 +1,14 @@
-# Çoklu Dil Çeviri Uygulaması (Multi-Language Translation App)
+```markdown
+# Çoklu Dil Çeviri Uygulaması  
+Multi-Language Translation Application
 
-This project is a simple multi-language translation application built using Windows Forms.  
-It demonstrates dictionary-based translation using clean OOP architecture.
+This project is a simple multi-language translation app built using **C# WinForms** and **DevExpress**.  
+It demonstrates dictionary-based translation using a clean and structured **OOP architecture**.
 
 ---
 
 ## 🌍 Supported Languages
+
 - English  
 - Turkish  
 - Arabic  
@@ -13,85 +16,145 @@ It demonstrates dictionary-based translation using clean OOP architecture.
 ---
 
 ## ✨ Features
-- Translate words between English, Turkish, and Arabic  
-- Select source and target language  
-- Words stored in an internal dictionary  
-- Supports sentence translation (word-by-word)  
+
+- Translate text from one language to another  
+- Select source and target languages  
+- Dictionary-based translation system  
+- Supports word-by-word sentence translation  
+- Keeps unknown words unchanged  
+- Fully separated logic (Model → Service → UI)
 
 ---
 
-## 🧩 Architecture
+## 🧩 Architecture Overview
 
-### 1. Model
-`WordPair`  
+The application is divided into three layers:
+
+1. **Model Layer**  
+2. **Service Layer**  
+3. **UI Layer (Presentation)**
+
+---
+
+## 1️⃣ Model Layer
+
+### `WordPair` (Model)
+
 Represents a single word in three languages:
-```cs
-public class WordPair {
+
+```csharp
+public class WordPair
+{
     public string English { get; set; }
     public string Turkish { get; set; }
     public string Arabic  { get; set; }
 }
+```
 
-2. Service Layer
-Two components:
+This class is used as an entry inside the internal dictionary.
 
-ITranslationService
-Defines translation behavior:
+---
 
-string Translate(string input, string fromLang, string toLang);
-TranslationService
+## 2️⃣ Service Layer
+
+The logic of translation is implemented in this layer.  
+It contains two components:
+
+### `ITranslationService` (Interface)
+
+Defines the translation behavior:
+
+```csharp
+public interface ITranslationService
+{
+    string Translate(string input, string fromLang, string toLang);
+}
+```
+
+### `TranslationService` (Implementation)
+
 Implements dictionary-based translation:
 
-Stores predefined words
+- Stores predefined words as a list of `WordPair`
+- Splits sentences into words
+- Translates each word individually
+- Keeps words unchanged if not found in the dictionary
+- Returns the fully translated sentence
 
-Splits sentences into words
+### Translation Logic (Step-by-step)
 
-Translates each word
+1. Validate input
+2. Split text into individual words
+3. For each word:
+   - Search for it according to the source language
+   - If found → return the equivalent in the target language
+   - If not found → keep the word as-is
+4. Combine translated words into a final output sentence
 
-Returns the full translated sentence
+---
 
-3. UI Layer
-The translation tab contains:
+## 3️⃣ UI Layer (Presentation)
 
-txtInput — text to translate
+Built using WinForms + DevExpress controls.
 
-cmbFrom — source language
+### UI Components
 
-cmbTo — target language
+- `txtInput` — input text
+- `cmbFrom` — source language dropdown
+- `cmbTo` — target language dropdown
+- `btnTranslate` — triggers the translation
+- `txtOutput` — displays the translated sentence
 
-btnTranslate — performs translation
+### Initialization (`Form1_Load`)
 
-txtOutput — translated text
+```csharp
+cmbFrom.Items.AddRange(new[] { "English", "Turkish", "Arabic" });
+cmbTo.Items.AddRange(new[] { "English", "Turkish", "Arabic" });
 
-🎯 How Translation Works
-User enters text
+cmbFrom.SelectedIndex = 0; // English
+cmbTo.SelectedIndex = 1;   // Turkish
+```
 
-Application splits the text into words
+### Button Click Event
 
-Each word is matched inside the dictionary
+```csharp
+private void btnTranslate_Click(object sender, EventArgs e)
+{
+    string input = txtInput.Text;
+    string from  = cmbFrom.SelectedItem.ToString();
+    string to    = cmbTo.SelectedItem.ToString();
 
-If a match is found → translated
+    txtOutput.Text = _translationService.Translate(input, from, to);
+}
+```
 
-If not found → word remains unchanged
+The UI does not contain any business logic — it simply interacts with the `TranslationService`.
 
-All results are combined into a final output sentence
+---
 
-🛠️ Technologies Used
-C#
+## 🔧 Technologies Used
 
-Windows Forms
+- C#
+- Windows Forms
+- DevExpress
+- OOP (Models, Services, Interfaces)
 
-DevExpress Controls
+---
 
-Dictionary-based translation logic
+## 🎯 Learning Outcomes
 
-OOP principles (Models, Interfaces, Services)
+- Understanding layered architecture
+- Using interfaces and service classes
+- Handling string operations
+- Designing a multilingual application
+- Clean separation between UI and logic
 
-⭐ Learning Outcomes
-Creating service-based architecture
+---
 
-Using models to structure data
+## 📌 Notes
 
-Implementing dictionary-driven translation
+- You can extend the dictionary by simply adding more `WordPair` entries.
+- New languages can be added by expanding the model and service logic.
+```
 
-Building multilingual UI
+لقد قمت بإنشاء ملف `README.md` بناءً على النص الذي قدمته. تم الحفاظ على جميع الأقسام والمعلومات مع تحسين التنسيق وترتيب العناوين لجعل الملف أكثر تنظيمًا وسهولة في القراءة.
