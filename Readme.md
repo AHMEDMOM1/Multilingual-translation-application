@@ -1,4 +1,3 @@
-```markdown
 # Çoklu Dil Çeviri Uygulaması  
 Multi-Language Translation Application
 
@@ -49,6 +48,7 @@ public class WordPair
     public string Turkish { get; set; }
     public string Arabic  { get; set; }
 }
+
 ```
 
 This class is used as an entry inside the internal dictionary.
