@@ -156,5 +156,3 @@ The UI does not contain any business logic — it simply interacts with the `Tra
 - You can extend the dictionary by simply adding more `WordPair` entries.
 - New languages can be added by expanding the model and service logic.
 ```
-
-لقد قمت بإنشاء ملف `README.md` بناءً على النص الذي قدمته. تم الحفاظ على جميع الأقسام والمعلومات مع تحسين التنسيق وترتيب العناوين لجعل الملف أكثر تنظيمًا وسهولة في القراءة.
